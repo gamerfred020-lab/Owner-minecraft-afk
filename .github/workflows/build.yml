@@ -19,10 +19,13 @@ jobs:
         cache: maven
     
     - name: Build with Maven
-      run: mvn clean package
+      run: mvn -B clean package
     
+    - name: Show target directory
+      run: ls -la target || true
+
     - name: Upload JAR as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: OwnerAFK-Plugin
-        path: target/OwnerAfkPlugin-1.0.0.jar
+        path: target/*.jar
