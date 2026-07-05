@@ -3,11 +3,17 @@
 # The username of the owner to monitor
 owner-name: "YourName"
 
-# The sidebar title when owner is AFK
+# The sidebar title and message when owner is AFK
 sidebar:
   title: "&c&lOWNER STATUS"
   message: "&e&lOwner is AFK"
   info: "&7They will be back shortly!"
+
+# The sidebar title and message when owner is OFFLINE
+offline:
+  title: "&4&lOWNER STATUS"
+  message: "&c&lOwner is OFFLINE"
+  info: "&7Server might be empty!"
 
 # Enable/Disable the plugin
 enabled: true
