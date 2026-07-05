@@ -24,6 +24,7 @@ public class OwnerAfkPlugin extends JavaPlugin {
         
         getLogger().info("Owner AFK Plugin enabled!");
         getLogger().info("Monitoring owner: " + ownerName);
+        getLogger().info("Configuration file created at: plugins/OwnerAFK/config.yml");
         
         // Register listeners
         new AfkListener(this);
