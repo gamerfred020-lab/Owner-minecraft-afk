@@ -45,27 +45,27 @@ public class OwnerAfkPlugin extends JavaPlugin {
             Player owner = Bukkit.getPlayer(ownerName);
             
             if (owner != null && owner.isOnline()) {
-                // Check if owner is in spectator mode
+                // Owner is online
                 if (owner.getGameMode().toString().equals("SPECTATOR")) {
-                    // Show AFK message to all online players
+                    // Owner is AFK (in spectator mode)
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         if (!playerScoreboards.containsKey(player)) {
                             showAfkSidebar(player);
                         }
                     }
                 } else {
-                    // Remove AFK message from all players
+                    // Owner is online and not AFK
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         if (playerScoreboards.containsKey(player)) {
-                            removeAfkSidebar(player);
+                            removeStatusSidebar(player);
                         }
                     }
                 }
             } else {
-                // Remove AFK message if owner is not online
+                // Owner is OFFLINE
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (playerScoreboards.containsKey(player)) {
-                        removeAfkSidebar(player);
+                    if (!playerScoreboards.containsKey(player)) {
+                        showOfflineSidebar(player);
                     }
                 }
             }
@@ -93,7 +93,28 @@ public class OwnerAfkPlugin extends JavaPlugin {
         playerScoreboards.put(player, scoreboard);
     }
 
-    private void removeAfkSidebar(Player player) {
+    private void showOfflineSidebar(Player player) {
+        Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+        
+        String title = getConfig().getString("offline.title", "&4&lOWNER STATUS");
+        String message = getConfig().getString("offline.message", "&c&lOwner is OFFLINE");
+        String info = getConfig().getString("offline.info", "&7Server might be empty!");
+        
+        title = title.replace("&", "§");
+        message = message.replace("&", "§");
+        info = info.replace("&", "§");
+        
+        Objective objective = scoreboard.registerNewObjective("ownerstatus", "dummy", title);
+        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+        
+        objective.getScore(message).setScore(2);
+        objective.getScore(info).setScore(1);
+        
+        player.setScoreboard(scoreboard);
+        playerScoreboards.put(player, scoreboard);
+    }
+
+    private void removeStatusSidebar(Player player) {
         player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
         playerScoreboards.remove(player);
     }
