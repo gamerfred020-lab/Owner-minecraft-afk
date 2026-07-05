@@ -1,0 +1,5 @@
+name: OwnerAFK
+version: 1.0.0
+description: Displays a sidebar showing when the owner is AFK
+main: com.gamerfred020.ownerafk.OwnerAfkPlugin
+api-version: 1.20
